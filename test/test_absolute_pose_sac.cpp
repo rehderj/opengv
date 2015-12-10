@@ -33,7 +33,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <opengv/absolute_pose/methods.hpp>
 #include <opengv/absolute_pose/CentralAbsoluteAdapter.hpp>
 #include <opengv/sac/Ransac.hpp>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <name>opengv</name>
+  <version>0.0.1</version>
+  <description>opengv</description>
+
+  <maintainer email="laurent.kneip@anu.edu.au">Laurent Kneip</maintainer>
+  <license>FreeBSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <build_depend>eigen_catkin</build_depend>
+
+</package>

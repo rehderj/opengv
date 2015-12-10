@@ -37,7 +37,7 @@
 #define OPENGV_ABSOLUTE_POSE_MODULES_EPNP_HPP_
 
 #include <stdlib.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <Eigen/src/Core/util/DisableStupidWarnings.h>
 
 namespace opengv

@@ -33,7 +33,7 @@
 #define OPENGV_RELATIVE_POSE_MODULES_MAIN_HPP_
 
 #include <stdlib.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <Eigen/src/Core/util/DisableStupidWarnings.h>
 #include <opengv/types.hpp>
 

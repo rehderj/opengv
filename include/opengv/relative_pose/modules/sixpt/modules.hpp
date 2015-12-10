@@ -35,7 +35,7 @@
 #define EQS 60
 
 #include <stdlib.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <Eigen/src/Core/util/DisableStupidWarnings.h>
 #include <opengv/types.hpp>
 

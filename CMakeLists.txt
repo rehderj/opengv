@@ -1,38 +1,11 @@
-cmake_minimum_required(VERSION 2.4.6)
+cmake_minimum_required(VERSION 2.8.3)
 project(opengv)
 
-set (OPENGV_VERSION_MAJOR 1)
-set (OPENGV_VERSION_MINOR 0)
+find_package(catkin_simple REQUIRED)
+catkin_simple()
 
-# Set the build type.  Options are:
-#
-#  None (CMAKE_C_FLAGS or CMAKE_CXX_FLAGS used)
-#  Debug (CMAKE_C_FLAGS_DEBUG or CMAKE_CXX_FLAGS_DEBUG)
-#  Release (CMAKE_C_FLAGS_RELEASE or CMAKE_CXX_FLAGS_RELEASE)
-#  RelWithDebInfo (CMAKE_C_FLAGS_RELWITHDEBINFO or CMAKE_CXX_FLAGS_RELWITHDEBINFO
-#  MinSizeRel (CMAKE_C_FLAGS_MINSIZEREL or CMAKE_CXX_FLAGS_MINSIZEREL) 
-
-set(CMAKE_BUILD_TYPE Release)
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-add_definitions (-Wall -march=native -O3) #TODO use correct c++11 def once everybody has moved to gcc 4.7 # for now I even removed std=gnu++0x
-
-# get eigen (and boost under windows)
-IF(WIN32)
-  set(ADDITIONAL_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/third_party
-                              ${PROJECT_SOURCE_DIR}/third_party/eigen3
-                              ${PROJECT_SOURCE_DIR}/third_party/eigen3/unsupported )
-ELSE()
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/modules/")
-  find_package(Eigen REQUIRED)
-  set(ADDITIONAL_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS} ${EIGEN_INCLUDE_DIR}/unsupported )
-ENDIF()
-
-include_directories(${ADDITIONAL_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include)
+find_package(Boost REQUIRED COMPONENTS system thread)
+include_directories(${Eigen_INCLUDE_DIRS})
 
 set( OPENGV_SOURCE_FILES
   src/absolute_pose/modules/main.cpp
@@ -149,59 +122,10 @@ set( OPENGV_HEADER_FILES
   include/opengv/relative_pose/MANoncentralRelativeMulti.hpp
   include/opengv/point_cloud/MAPointCloud.hpp )
 
-IF(WIN32)
-  add_library( opengv ${OPENGV_SOURCE_FILES} ${OPENGV_HEADER_FILES} )
-  add_library( random_generators test/random_generators.cpp test/random_generators.hpp test/experiment_helpers.cpp test/experiment_helpers.hpp test/time_measurement.cpp test/time_measurement.hpp )
-ELSE()
-  add_library( opengv SHARED ${OPENGV_SOURCE_FILES} ${OPENGV_HEADER_FILES} )
-  add_library( random_generators SHARED test/random_generators.cpp test/random_generators.hpp test/experiment_helpers.cpp test/experiment_helpers.hpp test/time_measurement.cpp test/time_measurement.hpp )
-  target_link_libraries(random_generators opengv)
-ENDIF()
+add_definitions(-Wall -march=native -O3)
 
-add_executable( test_absolute_pose test/test_absolute_pose.cpp )
-target_link_libraries( test_absolute_pose opengv random_generators )
+cs_add_library(${PROJECT_NAME} ${OPENGV_SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${TBB_LIBRARIES})
 
-add_executable( test_absolute_pose_sac test/test_absolute_pose_sac.cpp )
-target_link_libraries( test_absolute_pose_sac opengv random_generators )
-
-add_executable( test_noncentral_absolute_pose test/test_noncentral_absolute_pose.cpp )
-target_link_libraries( test_noncentral_absolute_pose opengv random_generators )
-
-add_executable( test_noncentral_absolute_pose_sac test/test_noncentral_absolute_pose_sac.cpp )
-target_link_libraries( test_noncentral_absolute_pose_sac opengv random_generators )
-
-add_executable( test_relative_pose test/test_relative_pose.cpp )
-target_link_libraries( test_relative_pose opengv random_generators )
-
-add_executable( test_relative_pose_rotationOnly test/test_relative_pose_rotationOnly.cpp )
-target_link_libraries( test_relative_pose_rotationOnly opengv random_generators )
-
-add_executable( test_relative_pose_rotationOnly_sac test/test_relative_pose_rotationOnly_sac.cpp )
-target_link_libraries( test_relative_pose_rotationOnly_sac opengv random_generators )
-
-add_executable( test_relative_pose_sac test/test_relative_pose_sac.cpp )
-target_link_libraries( test_relative_pose_sac opengv random_generators )
-
-add_executable( test_noncentral_relative_pose test/test_noncentral_relative_pose.cpp )
-target_link_libraries( test_noncentral_relative_pose opengv random_generators )
-
-add_executable( test_noncentral_relative_pose_sac test/test_noncentral_relative_pose_sac.cpp )
-target_link_libraries( test_noncentral_relative_pose_sac opengv random_generators )
-
-add_executable( test_multi_noncentral_relative_pose_sac test/test_multi_noncentral_relative_pose_sac.cpp )
-target_link_libraries( test_multi_noncentral_relative_pose_sac opengv random_generators )
-
-add_executable( test_eigensolver_sac test/test_eigensolver_sac.cpp )
-target_link_libraries( test_eigensolver_sac opengv random_generators )
-
-add_executable( test_triangulation test/test_triangulation.cpp )
-target_link_libraries( test_triangulation opengv random_generators )
-
-add_executable( test_eigensolver test/test_eigensolver.cpp )
-target_link_libraries( test_eigensolver opengv random_generators )
-
-add_executable( test_point_cloud test/test_point_cloud.cpp )
-target_link_libraries( test_point_cloud opengv random_generators )
-
-add_Executable( test_point_cloud_sac test/test_point_cloud_sac.cpp )
-target_link_libraries( test_point_cloud_sac opengv random_generators )
+cs_install()
+cs_export()

@@ -33,7 +33,7 @@
 
 #include <stdlib.h>
 #include <vector>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 
 namespace opengv
 {

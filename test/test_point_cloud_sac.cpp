@@ -33,7 +33,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <opengv/point_cloud/methods.hpp>
 #include <opengv/point_cloud/PointCloudAdapter.hpp>
 #include <opengv/sac/Ransac.hpp>

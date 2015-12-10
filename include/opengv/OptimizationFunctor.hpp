@@ -38,7 +38,7 @@
 #define OPENGV_OPTIMIZATIONFUNCTOR_HPP_
 
 #include <stdlib.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <Eigen/src/Core/util/DisableStupidWarnings.h>
 
 using namespace std;

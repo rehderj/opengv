@@ -39,7 +39,7 @@
 
 #include <stdlib.h>
 #include <vector>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <Eigen/src/Core/util/DisableStupidWarnings.h>
 
 /**

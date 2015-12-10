@@ -33,7 +33,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits.h>
-#include <Eigen/Eigen>
+#include <Eigen/Dense>
 #include <opengv/relative_pose/methods.hpp>
 #include <opengv/relative_pose/NoncentralRelativeAdapter.hpp>
 #include <opengv/sac/Ransac.hpp>
