@@ -4,8 +4,11 @@ project(opengv)
 find_package(catkin_simple REQUIRED)
 catkin_simple()
 
+find_package(cmake_modules REQUIRED)
+find_package(Eigen REQUIRED)
+
 find_package(Boost REQUIRED COMPONENTS system thread)
-include_directories(${Eigen_INCLUDE_DIRS})
+include_directories(include ${Eigen_INCLUDE_DIRS})
 
 set( OPENGV_SOURCE_FILES
   src/absolute_pose/modules/main.cpp
